@@ -27,6 +27,7 @@ constexpr int KEYCODE_DPAD_RIGHT = 22;
 constexpr int KEYCODE_FORWARD_DEL = 112;
 constexpr int KEYCODE_MOVE_HOME = 122;
 constexpr int KEYCODE_MOVE_END = 123;
+constexpr int KEYCODE_APP_SWITCH = 187;
 
 constexpr wchar_t CTRL_C = 0x03;
 constexpr UINT TOGGLE_KEY = 'K';
@@ -372,6 +373,12 @@ void sendCharacter(wchar_t character) {
 }
 
 void forwardKey(const KBDLLHOOKSTRUCT &key) {
+    if (altDown && key.vkCode == VK_TAB) {
+        pendingDeadChar = 0;
+        sender->post([](AdbShell &shell) { shell.keyEvent(KEYCODE_APP_SWITCH); });
+        return;
+    }
+
     const auto event = KEY_EVENTS.find(key.vkCode);
     if (event != KEY_EVENTS.end()) {
         if (pendingDeadChar != 0 && key.vkCode == VK_SPACE) {
@@ -692,7 +699,7 @@ int main(int argc, char **argv) {
         std::printf("KeyboardToAndroid works from any window.\n"
                     "  Ctrl+Alt+K  type on the phone / back to the PC\n"
                     "  Ctrl+Alt+Q  quit\n"
-                    "While on, Esc is the phone's Back button.\n");
+                    "While on, Esc is the phone's Back button and Alt+Tab opens its recent apps.\n");
         printStatus();
 
         MSG message;

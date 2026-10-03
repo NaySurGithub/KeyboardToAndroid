@@ -17,7 +17,8 @@ Download `KeyboardToAndroid.exe` from the [releases](../../releases) and run it.
 | `Ctrl+Alt+K` | Start or stop sending keys to the phone |
 | `Ctrl+Alt+Q` | Quit |
 
-While sending, keys go to the phone instead of the PC, and `Esc` is the phone's Back button. Accented letters
+While sending, keys go to the phone instead of the PC, `Esc` is the phone's Back button and `Alt+Tab` opens its
+recent apps. Accented letters
 (é, è, à, ç, ê, ë…) are supported.
 
 With no phone connected, the app explains how to connect one and waits for it.
